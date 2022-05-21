@@ -1,4 +1,5 @@
 import 'styled-components';
+import { TextColors, SpaceIndex } from './theme';
 
 declare module 'styled-components' {
 	export interface DefaultTheme {
@@ -6,16 +7,13 @@ declare module 'styled-components' {
 			primary: {
 				main: string;
 			};
-			text: {
-				light: string;
-				dark: string;
-				emphasis: string;
-			};
+			text: TextColors;
 		};
 		fonts: {
 			primary: {
 				fontFamily: string;
 			};
 		};
+		spacing: (spaceIndex: SpaceIndex) => number;
 	}
 }

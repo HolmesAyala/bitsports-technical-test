@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
 
-export const BASE_FONT_SIZE: string = '14px';
+export const BASE_FONT_SIZE: string = '1rem';
 
 export const MAIN_FONT: string = 'sf-pro-display';
 
