@@ -2,7 +2,7 @@ import { css } from 'styled-components';
 
 export const BASE_FONT_SIZE: string = '1rem';
 
-export const MAIN_FONT: string = 'sf-pro-display';
+export const MAIN_FONT: string = `'sf-pro-display'`;
 
 export const FONT_FAMILY: string = `${MAIN_FONT}, sans-serif`;
 
