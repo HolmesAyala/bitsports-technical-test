@@ -12,5 +12,10 @@ declare module 'styled-components' {
 				emphasis: string;
 			};
 		};
+		fonts: {
+			primary: {
+				fontFamily: string;
+			};
+		};
 	}
 }
