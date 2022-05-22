@@ -1,12 +1,37 @@
-import TopBar from '../../components/TopBar';
+import { useState, useCallback } from 'react';
+
 import * as styled from './styled';
 
+import TopBar from '../../components/TopBar';
+
+import { Character } from '../../api/getCharacters';
+
 const Home = () => {
+	const [characterSelected, setCharacterSelected] = useState<Character | null>(null);
+
+	const onBackFromTopBar = useCallback(() => {
+		setCharacterSelected(null);
+	}, []);
+
+	const onSelectItemFromCharacterList = useCallback((character: Character) => {
+		setCharacterSelected(character);
+	}, []);
+
+	const characterList: JSX.Element = (
+		<styled.CharacterList onSelectItem={onSelectItemFromCharacterList} />
+	);
+
 	return (
 		<styled.Home>
-			<TopBar title='People of Star Wars' />
+			<TopBar
+				backButton={Boolean(characterSelected)}
+				title={characterSelected ? characterSelected.name : 'Characters of Rick and Morty'}
+				onBack={onBackFromTopBar}
+			/>
 
-			<styled.CharacterList />
+			{!characterSelected && characterList}
+
+			{characterSelected && <styled.CharacterDetail character={characterSelected} />}
 		</styled.Home>
 	);
 };

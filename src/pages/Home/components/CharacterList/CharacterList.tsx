@@ -1,4 +1,12 @@
-import { useEffect, useCallback, useState, useMemo, HTMLAttributes, UIEvent } from 'react';
+import {
+	useEffect,
+	useCallback,
+	useState,
+	useMemo,
+	HTMLAttributes,
+	UIEvent,
+	MouseEvent,
+} from 'react';
 import PersonCell from '../../../../components/PersonCell';
 import LoadingCell from '../../../../components/LoadingCell';
 import NoticeCell from '../../../../components/NoticeCell';
@@ -6,9 +14,11 @@ import * as styled from './styled';
 import getCharacters, { Character, ResponseBody } from '../../../../api/getCharacters';
 import useIsMounted from '../../../../hooks/useIsMounted';
 
-type CharacterListProps = HTMLAttributes<HTMLUListElement>;
+type CharacterListProps = HTMLAttributes<HTMLUListElement> & {
+	onSelectItem?: (character: Character) => void;
+};
 
-const CharacterList = (props: CharacterListProps) => {
+const CharacterList = ({ onSelectItem, ...props }: CharacterListProps) => {
 	const isMounted = useIsMounted();
 
 	const [nextUrlToLoadCharacters, setNextUrlToLoadCharacters] = useState<string | null>(null);
@@ -50,6 +60,21 @@ const CharacterList = (props: CharacterListProps) => {
 		loadMoreCharacters();
 	}, [loadMoreCharacters]);
 
+	const onClickFromCharacterCell = useCallback(
+		(event: MouseEvent<HTMLButtonElement>) => {
+			const { characterId } = event.currentTarget.dataset;
+
+			const characterToSelect: Character | undefined = characters.find(
+				(character) => character.id === Number(characterId)
+			);
+
+			if (characterToSelect && onSelectItem) {
+				onSelectItem(characterToSelect);
+			}
+		},
+		[characters, onSelectItem]
+	);
+
 	const onScrollFromCharacterList = useCallback(
 		(event: UIEvent<HTMLUListElement>) => {
 			const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
@@ -69,12 +94,14 @@ const CharacterList = (props: CharacterListProps) => {
 		() =>
 			characters.map((character) => (
 				<PersonCell
+					data-character-id={character.id}
 					key={character.id}
 					title={character.name}
 					description={`${character.species} from ${character.origin.name}`}
+					onClick={onClickFromCharacterCell}
 				/>
 			)),
-		[characters]
+		[characters, onClickFromCharacterCell]
 	);
 
 	return (

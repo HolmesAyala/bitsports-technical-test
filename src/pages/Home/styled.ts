@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import CharacterListComponent from './components/CharacterList';
+import CharacterListBase from './components/CharacterList';
+import CharacterDetailBase from './components/CharacterDetail';
 
 export const Home = styled('header')`
 	height: 100%;
@@ -8,6 +9,10 @@ export const Home = styled('header')`
 	overflow: hidden;
 `;
 
-export const CharacterList = styled(CharacterListComponent)`
+export const CharacterList = styled(CharacterListBase)`
+	overflow: auto;
+`;
+
+export const CharacterDetail = styled(CharacterDetailBase)`
 	overflow: auto;
 `;
