@@ -1,13 +1,24 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
+import { useMediaQuery } from 'usehooks-ts';
 
 import * as styled from './styled';
-
-import TopBar from '../../components/TopBar';
 
 import { Character } from '../../api/getCharacters';
 
 const Home = () => {
+	const isDesktop = useMediaQuery(`(min-width:${styled.MIN_DESKTOP_WIDTH})`);
+
 	const [characterSelected, setCharacterSelected] = useState<Character | null>(null);
+
+	const topBarTitle: string = useMemo(() => {
+		const mainTitle = 'Characters of Rick and Morty';
+
+		if (!characterSelected) return mainTitle;
+
+		if (isDesktop) return `${mainTitle}: ${characterSelected.name}`;
+
+		return characterSelected.name;
+	}, [characterSelected, isDesktop]);
 
 	const onBackFromTopBar = useCallback(() => {
 		setCharacterSelected(null);
@@ -18,20 +29,33 @@ const Home = () => {
 	}, []);
 
 	const characterList: JSX.Element = (
-		<styled.CharacterList onSelectItem={onSelectItemFromCharacterList} />
+		<styled.CharacterList
+			hidden={Boolean(characterSelected && !isDesktop)}
+			onSelectItem={onSelectItemFromCharacterList}
+		/>
 	);
+
+	const characterDetail: JSX.Element | undefined = characterSelected ? (
+		<styled.CharacterDetailContainer>
+			<styled.CharacterDetail character={characterSelected} />
+		</styled.CharacterDetailContainer>
+	) : undefined;
 
 	return (
 		<styled.Home>
-			<TopBar
-				backButton={Boolean(characterSelected)}
-				title={characterSelected ? characterSelected.name : 'Characters of Rick and Morty'}
+			<styled.TopBar
+				backButton={!isDesktop && Boolean(characterSelected)}
+				title={topBarTitle}
 				onBack={onBackFromTopBar}
 			/>
 
-			{!characterSelected && characterList}
+			<styled.ContentContainer>
+				{characterList}
 
-			{characterSelected && <styled.CharacterDetail character={characterSelected} />}
+				{isDesktop && <styled.ContentSeparator />}
+
+				{characterDetail}
+			</styled.ContentContainer>
 		</styled.Home>
 	);
 };
