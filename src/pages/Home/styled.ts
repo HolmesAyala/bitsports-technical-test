@@ -45,7 +45,6 @@ export const Home = styled('header')`
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	overflow: hidden;
 
 	@media only screen and (min-width: ${MIN_DESKTOP_WIDTH}) {
 		${TopBar} {

@@ -10,6 +10,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
+    overscroll-behavior-y: contain;
     margin: 0;
     font-family: ${FONT_FAMILY};
     font-size: ${BASE_FONT_SIZE};

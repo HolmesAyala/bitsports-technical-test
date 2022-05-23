@@ -3,9 +3,11 @@ import {
 	useCallback,
 	useState,
 	useMemo,
+	useRef,
 	HTMLAttributes,
 	UIEvent,
 	MouseEvent,
+	TouchEvent,
 } from 'react';
 import PersonCell from '../../../../components/PersonCell';
 import LoadingCell from '../../../../components/LoadingCell';
@@ -20,6 +22,8 @@ type CharacterListProps = HTMLAttributes<HTMLUListElement> & {
 
 const CharacterList = ({ onSelectItem, ...props }: CharacterListProps) => {
 	const isMounted = useIsMounted();
+
+	const touchYRef = useRef<{ start: number; end: number }>({ start: 0, end: 0 });
 
 	const [nextUrlToLoadCharacters, setNextUrlToLoadCharacters] = useState<string | null>(null);
 
@@ -79,15 +83,36 @@ const CharacterList = ({ onSelectItem, ...props }: CharacterListProps) => {
 		(event: UIEvent<HTMLUListElement>) => {
 			const { scrollTop, scrollHeight, clientHeight } = event.currentTarget;
 
-			if (
-				!loadingCharacters &&
-				nextUrlToLoadCharacters &&
-				scrollTop + clientHeight === scrollHeight
-			) {
+			const isFullScroll: boolean = Math.round(scrollTop) + clientHeight === scrollHeight;
+
+			if (!loadingCharacters && nextUrlToLoadCharacters && isFullScroll) {
 				loadMoreCharacters(nextUrlToLoadCharacters);
 			}
 		},
 		[loadingCharacters, nextUrlToLoadCharacters, loadMoreCharacters]
+	);
+
+	const onTouchStartFromCharacterList = useCallback((event: TouchEvent<HTMLUListElement>) => {
+		touchYRef.current.start = event.touches[0].pageY;
+	}, []);
+
+	const onTouchMoveFromCharacterList = useCallback((event: TouchEvent<HTMLUListElement>) => {
+		touchYRef.current.end = event.touches[0].pageY;
+	}, []);
+
+	const onTouchEndFromCharacterList = useCallback(
+		(event: TouchEvent<HTMLUListElement>) => {
+			const shouldTryToLoadDataAgain: boolean =
+				errorLoadingCharacters &&
+				!loadingCharacters &&
+				event.currentTarget.scrollTop === 0 &&
+				touchYRef.current.start < touchYRef.current.end;
+
+			if (shouldTryToLoadDataAgain) {
+				loadMoreCharacters(nextUrlToLoadCharacters ?? undefined);
+			}
+		},
+		[errorLoadingCharacters, loadingCharacters, loadMoreCharacters, nextUrlToLoadCharacters]
 	);
 
 	const characterListToRender: JSX.Element[] = useMemo(
@@ -105,12 +130,18 @@ const CharacterList = ({ onSelectItem, ...props }: CharacterListProps) => {
 	);
 
 	return (
-		<styled.CharacterList onScroll={onScrollFromCharacterList} {...props}>
+		<styled.CharacterList
+			onScroll={onScrollFromCharacterList}
+			onTouchStart={onTouchStartFromCharacterList}
+			onTouchMove={onTouchMoveFromCharacterList}
+			onTouchEnd={onTouchEndFromCharacterList}
+			{...props}
+		>
 			{errorLoadingCharacters && <NoticeCell>Failed to Load Data</NoticeCell>}
 
 			{!errorLoadingCharacters && characterListToRender}
 
-			{loadingCharacters && <LoadingCell />}
+			<LoadingCell style={{ visibility: loadingCharacters ? 'visible' : 'hidden' }} />
 		</styled.CharacterList>
 	);
 };
