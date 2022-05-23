@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { DEFAULT_THEME } from '../../styles/theme';
 import TopBar from './TopBar';
@@ -16,7 +16,7 @@ describe('TopBar', () => {
 		screen.getByText(title);
 	});
 
-	it('Should call onBack when click in BackButton', () => {
+	it('Should render BackButton', () => {
 		render(
 			<ThemeProvider theme={DEFAULT_THEME}>
 				<TopBar backButton />
@@ -24,5 +24,19 @@ describe('TopBar', () => {
 		);
 
 		screen.getByRole('button', { name: 'Back' });
+	});
+
+	it('Should call onBack when click in BackButton', () => {
+		const onBackMock = jest.fn();
+
+		render(
+			<ThemeProvider theme={DEFAULT_THEME}>
+				<TopBar backButton onBack={onBackMock} />
+			</ThemeProvider>
+		);
+
+		fireEvent.click(screen.getByRole('button', { name: 'Back' }));
+
+		expect(onBackMock).toBeCalled();
 	});
 });
