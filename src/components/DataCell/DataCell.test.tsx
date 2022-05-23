@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { DEFAULT_THEME } from '../../styles/theme';
