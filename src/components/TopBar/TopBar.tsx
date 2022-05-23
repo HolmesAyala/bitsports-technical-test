@@ -14,7 +14,7 @@ const TopBar = ({ className, backButton = false, title, onBack }: TopBarProps) =
 	const positioningHelper: JSX.Element | undefined = backButton ? <div /> : undefined;
 
 	const leftAction: JSX.Element | undefined = backButton ? (
-		<styled.BackButton onClick={onBack}>
+		<styled.BackButton aria-label='Back' onClick={onBack}>
 			<BackIcon />
 		</styled.BackButton>
 	) : undefined;

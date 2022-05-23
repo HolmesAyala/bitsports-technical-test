@@ -5,7 +5,7 @@ import SectionHeader from './SectionHeader';
 
 describe('SectionHeader', () => {
 	it('Should render children', () => {
-		const children = 'Some title';
+		const children = 'Some children';
 
 		render(
 			<ThemeProvider theme={DEFAULT_THEME}>
