@@ -9,12 +9,13 @@ import {
 	MouseEvent,
 	TouchEvent,
 } from 'react';
+import { useIsMounted } from 'usehooks-ts';
+
 import PersonCell from '../../../../components/PersonCell';
 import LoadingCell from '../../../../components/LoadingCell';
 import NoticeCell from '../../../../components/NoticeCell';
 import * as styled from './styled';
 import getCharacters, { Character, ResponseBody } from '../../../../api/getCharacters';
-import useIsMounted from '../../../../hooks/useIsMounted';
 
 type CharacterListProps = HTMLAttributes<HTMLUListElement> & {
 	onSelectItem?: (character: Character) => void;
