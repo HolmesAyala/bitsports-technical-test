@@ -48,6 +48,8 @@ const CharacterDetail = ({ className, character }: CharacterDetailProps) => {
 			}
 		};
 
+		setEpisodes([]);
+
 		loadEpisodes(character.episode.map(getResourceIdFromUrl));
 	}, [character, isMounted]);
 
