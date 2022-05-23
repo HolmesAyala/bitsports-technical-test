@@ -3,10 +3,9 @@ import { H2 } from '../text';
 
 export const DataCell = styled('div')`
 	padding: ${({ theme }) => theme.spacing(4)}px;
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
+	display: flex;
 	justify-content: space-between;
-	column-gap: ${({ theme }) => theme.spacing(4)}px;
+	gap: ${({ theme }) => theme.spacing(4)}px;
 	position: relative;
 
 	&::after {
@@ -20,6 +19,12 @@ export const DataCell = styled('div')`
 	}
 `;
 
+export const PropertyText = styled(H2)`
+	flex: 1 1 0;
+	text-align: left;
+`;
+
 export const ValueText = styled(H2)`
-	justify-self: end;
+	flex: 1 1 0;
+	text-align: right;
 `;

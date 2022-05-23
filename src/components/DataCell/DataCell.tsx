@@ -1,4 +1,3 @@
-import { H2 } from '../text';
 import * as styled from './styled';
 
 type DataCellProps = {
@@ -9,9 +8,9 @@ type DataCellProps = {
 const DataCell = ({ property, value }: DataCellProps) => {
 	return (
 		<styled.DataCell>
-			<H2 color='light'>{property}</H2>
+			{property && <styled.PropertyText color='light'>{property}</styled.PropertyText>}
 
-			<styled.ValueText>{value}</styled.ValueText>
+			{value && <styled.ValueText>{value}</styled.ValueText>}
 		</styled.DataCell>
 	);
 };

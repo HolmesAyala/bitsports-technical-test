@@ -4,10 +4,10 @@ import { H2 } from '../../components/text';
 export const TopBar = styled('header')<{ withLeftAction: boolean }>(
 	({ theme, withLeftAction }) => css`
 		display: grid;
-		justify-content: center;
 		align-items: center;
 		background-color: ${theme.colors.primary.main};
 		padding: ${theme.spacing(4)}px ${theme.spacing(5) + 1}px;
+		text-align: center;
 
 		${withLeftAction &&
 		css`
@@ -36,9 +36,4 @@ export const BackButton = styled('button')`
 
 export const Title = styled(H2)`
 	color: white;
-	justify-self: center;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	max-width: 100%;
 `;

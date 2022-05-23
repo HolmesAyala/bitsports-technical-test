@@ -48,8 +48,8 @@ export const Home = styled('header')`
 
 	@media only screen and (min-width: ${MIN_DESKTOP_WIDTH}) {
 		${TopBar} {
-			justify-content: start;
 			box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+			text-align: left;
 		}
 
 		${ContentContainer} {
