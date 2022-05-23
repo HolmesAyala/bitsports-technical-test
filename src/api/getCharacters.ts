@@ -1,3 +1,5 @@
+import { config } from '../config';
+
 export type Character = {
 	id: number;
 	name: string;
@@ -18,7 +20,7 @@ export type ResponseBody = {
 };
 
 export default async function getCharacters(nextUrl?: string): Promise<ResponseBody> {
-	const response = await fetch(nextUrl ?? `https://rickandmortyapi.com/api/character`);
+	const response = await fetch(nextUrl ?? `${config.api.baseUrl}/character`);
 
 	const body: ResponseBody = await response.json();
 
