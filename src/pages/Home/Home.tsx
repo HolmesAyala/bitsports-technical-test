@@ -5,17 +5,17 @@ import * as styled from './styled';
 
 import { Character } from '../../api/getCharacters';
 
+export const MAIN_TITLE: string = 'Characters of Rick and Morty';
+
 const Home = () => {
 	const isDesktop = useMediaQuery(`(min-width:${styled.MIN_DESKTOP_WIDTH})`);
 
 	const [characterSelected, setCharacterSelected] = useState<Character | null>(null);
 
 	const topBarTitle: string = useMemo(() => {
-		const mainTitle = 'Characters of Rick and Morty';
+		if (!characterSelected) return MAIN_TITLE;
 
-		if (!characterSelected) return mainTitle;
-
-		if (isDesktop) return `${mainTitle}: ${characterSelected.name}`;
+		if (isDesktop) return `${MAIN_TITLE}: ${characterSelected.name}`;
 
 		return characterSelected.name;
 	}, [characterSelected, isDesktop]);

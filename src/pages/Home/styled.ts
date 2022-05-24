@@ -41,7 +41,7 @@ export const ContentSeparator = styled('div')`
 
 export const TopBar = styled(TopBarBase)``;
 
-export const Home = styled('header')`
+export const Home = styled('div')`
 	height: 100%;
 	display: flex;
 	flex-direction: column;

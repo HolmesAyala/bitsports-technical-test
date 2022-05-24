@@ -26,7 +26,7 @@ function generateMockCharacter(id: number): Character {
 	};
 }
 
-function generateMockCharacters(): Character[] {
+export function generateMockCharacters(): Character[] {
 	const characters: Character[] = [];
 
 	for (let i = 1; i <= 20; i++) {

@@ -23,7 +23,9 @@ const TopBar = ({ className, backButton = false, title, onBack }: TopBarProps) =
 		<styled.TopBar className={className} withLeftAction={backButton}>
 			{leftAction}
 
-			<styled.Title title={title}>{title}</styled.Title>
+			<styled.Title data-testid='top-bar-title' title={title}>
+				{title}
+			</styled.Title>
 
 			{positioningHelper}
 		</styled.TopBar>
