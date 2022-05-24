@@ -1,46 +1,82 @@
-# Getting Started with Create React App
+# Bitsports-technical-test
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> Este proyecto fue creado con [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
-
-In the project directory, you can run:
+## Scripts
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Ejecuta la aplicación en modo de desarrollo ([http://localhost:3000](http://localhost:3000)).
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+[Ejecuta los test](https://facebook.github.io/create-react-app/docs/running-tests) en modo interactivo.
+
+### `npm run lint`
+
+Ejecuta el linter del proyecto.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Transpila la aplicación para [producción](https://facebook.github.io/create-react-app/docs/deployment) en la carpeta `build`.
 
 ### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+**Nota: Una vez que se ejecute `eject`, no se puede revertir!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Extrae toda la configuración establecida por defecto
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Diseño
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Inconsistencias
 
-## Learn More
+- **Usar margin en lugar de padding en los componentes del desgin system**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![image](https://user-images.githubusercontent.com/26050475/170035319-2470cf26-a1dd-4836-a647-b430ac304336.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+El uso de margin en los componentes puede acarrear problemas de margin collapse, por lo tanto se optó por implementarlo con padding.
+
+- **Ubicación de la separación en PersonCell respecto del tamaño del icono**
+
+![image](https://user-images.githubusercontent.com/26050475/170036378-1752fda7-2b63-4187-9015-424496280ae1.png)
+
+La ubicación del espaciado de 16px es incorrecta respecto al espacio que en realidad ocupa en icono.
+
+- **El color del header en la versión movil no es consistente**
+
+![image](https://user-images.githubusercontent.com/26050475/170036943-537e6aae-2b27-4a3c-80c0-0480aae15ba8.png)
+
+Se estableción el color **RavnBlack** para el header en todos los casos.
+
+- **No se provee una manera clara de obtener el height del TopBar en la versión movil**
+
+![image](https://user-images.githubusercontent.com/26050475/170038000-46d5bd84-6de1-4f25-b74d-3e485ea315bd.png)
+
+Por lo tanto se usó el height de la versión de escritorio: 52px.
+
+- **El height de DataCell no es correcto**;
+
+![image](https://user-images.githubusercontent.com/26050475/170038653-46bb520b-6a96-4109-929e-22745698b499.png)
+
+
+Debería ser de 20px + 16px * 2 = 52px.
+
+La implementación está acorde a ello:
+
+![image](https://user-images.githubusercontent.com/26050475/170039256-7843ebbf-62f7-4683-97f8-1e550a0a499b.png)
+
+- **Uso de colores que no están en el design system**
+
+Border inferior de PersonCell:
+
+![image](https://user-images.githubusercontent.com/26050475/170040643-d0e04d2d-0885-4f89-84a8-104bd415fc27.png)
+
+Separador de secciones en versión de escritorio:
+
+> Nota: No me fue posible seleccionar el elemento (hice uso de un color picker)
+
+![image](https://user-images.githubusercontent.com/26050475/170040731-57799771-cd0a-48e0-8add-86d00328e27d.png)
+
+BoxShadow en el header en la versión de escritorio:
+
+![image](https://user-images.githubusercontent.com/26050475/170040865-4a6ba007-ed06-463f-93a0-632d97ee5186.png)
