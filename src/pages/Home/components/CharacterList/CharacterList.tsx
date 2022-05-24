@@ -17,6 +17,8 @@ import NoticeCell from '../../../../components/NoticeCell';
 import * as styled from './styled';
 import getCharacters, { Character, ResponseBody } from '../../../../api/getCharacters';
 
+export const FAILED_TO_LOAD_CHARACTERS: string = 'Failed to Load Data';
+
 type CharacterListProps = HTMLAttributes<HTMLUListElement> & {
 	onSelectItem?: (character: Character) => void;
 };
@@ -48,8 +50,6 @@ const CharacterList = ({ onSelectItem, ...props }: CharacterListProps) => {
 				setCharacters((currentCharacters) => [...currentCharacters, ...charactersResponse.results]);
 			} catch (error) {
 				if (!isMounted()) return;
-
-				console.error(error);
 
 				setErrorLoadingCharacters(true);
 			} finally {
@@ -120,6 +120,7 @@ const CharacterList = ({ onSelectItem, ...props }: CharacterListProps) => {
 		() =>
 			characters.map((character) => (
 				<PersonCell
+					aria-label={`character: ${character.name}`}
 					data-character-id={character.id}
 					key={character.id}
 					title={character.name}
@@ -132,13 +133,14 @@ const CharacterList = ({ onSelectItem, ...props }: CharacterListProps) => {
 
 	return (
 		<styled.CharacterList
+			aria-label='characters'
 			onScroll={onScrollFromCharacterList}
 			onTouchStart={onTouchStartFromCharacterList}
 			onTouchMove={onTouchMoveFromCharacterList}
 			onTouchEnd={onTouchEndFromCharacterList}
 			{...props}
 		>
-			{errorLoadingCharacters && <NoticeCell>Failed to Load Data</NoticeCell>}
+			{errorLoadingCharacters && <NoticeCell>{FAILED_TO_LOAD_CHARACTERS}</NoticeCell>}
 
 			{!errorLoadingCharacters && characterListToRender}
 
