@@ -26,6 +26,12 @@ Transpila la aplicación para [producción](https://facebook.github.io/create-re
 
 Extrae toda la configuración establecida por defecto
 
+## Testing
+
+Resumen:
+
+![image](https://user-images.githubusercontent.com/26050475/170045146-d885314d-a244-490d-97f1-d55038360c56.png)
+
 ## Diseño
 
 ### Inconsistencias
