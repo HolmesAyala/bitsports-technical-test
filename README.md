@@ -80,3 +80,19 @@ Separador de secciones en versión de escritorio:
 BoxShadow en el header en la versión de escritorio:
 
 ![image](https://user-images.githubusercontent.com/26050475/170040865-4a6ba007-ed06-463f-93a0-632d97ee5186.png)
+
+- **No se establece una manera de reconocer el elemento seleccionado en la versión de escritorio**
+
+Se optó por mostrar el título de la aplicación con el nombre del personaje:
+
+![image](https://user-images.githubusercontent.com/26050475/170042528-a9a06eca-cbfd-4082-8d01-c6238eece368.png)
+
+- **No se proveen los estilos de hover y focus en la versión de escritorio**
+
+Es importante establecer los estilos de hover y focus para los elementos con los que el ususario puede interactuar como botones, inputs, etc.
+
+- **No se proveen casos de uso con texto multilinea**
+
+Se optó por dejar que el height de los componentes de adapte a texto multilinea.
+
+De lo contrario se hubiera implementado algún tipo de ellipsis.
