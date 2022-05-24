@@ -10,6 +10,8 @@ import { Character } from '../../../../api/getCharacters';
 import getEpisodes, { Episode } from '../../../../api/getEpisodes';
 import getResourceIdFromUrl from '../../../../api/utils/getResourceIdFromUrl';
 
+export const ERROR_LOADING_EPISODES: string = 'Failed to Load Data';
+
 type CharacterDetailProps = {
 	className?: string;
 	character: Character;
@@ -36,8 +38,6 @@ const CharacterDetail = ({ className, character }: CharacterDetailProps) => {
 
 				setEpisodes(episodesLoaded);
 			} catch (error) {
-				console.error(error);
-
 				if (!isMounted()) return;
 
 				setErrorLoadingEpisodes(true);
@@ -50,7 +50,9 @@ const CharacterDetail = ({ className, character }: CharacterDetailProps) => {
 
 		setEpisodes([]);
 
-		loadEpisodes(character.episode.map(getResourceIdFromUrl));
+		if (character.episode.length > 0) {
+			loadEpisodes(character.episode.map(getResourceIdFromUrl));
+		}
 	}, [character, isMounted]);
 
 	const episodesToRender: JSX.Element[] = useMemo(
@@ -74,7 +76,7 @@ const CharacterDetail = ({ className, character }: CharacterDetailProps) => {
 
 			{episodesToRender}
 
-			{errorLoadingEpisodes && <NoticeCell>Failed to Load Data</NoticeCell>}
+			{errorLoadingEpisodes && <NoticeCell>{ERROR_LOADING_EPISODES}</NoticeCell>}
 
 			{loadingEpisodes && <LoadingCell />}
 		</div>
